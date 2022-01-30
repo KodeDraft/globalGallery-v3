@@ -23,10 +23,10 @@ export default function OnBoarding({ navigation }) {
         </View>
         <View style={styles.imgArea}>
           <Image
-            source={require("../assets/splash.png")}
+            source={require("../assets/icon.png")}
             style={{
               width: "90%",
-              height: 200,
+              height: 220,
               alignSelf: "center",
               marginTop: "5%",
             }}

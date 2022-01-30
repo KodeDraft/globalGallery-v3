@@ -27,7 +27,7 @@ export default function Profile(props) {
   useEffect(() => {
     getName();
     getProfile();
-  });
+  }, []);
 
   // # VARIABLES
   // SETTING AVATOR IMAGE
@@ -40,9 +40,9 @@ export default function Profile(props) {
   const [displayEditBtn, setDisplayEditBtn] = useState("block");
   const [displaySaveBtn, setDisplaySaveBtn] = useState("none");
   // FIREBASE
-  const profilePathRef = `PROFILE-PIC${currentUser?.uid}`;
   const auth = getAuth();
   const currentUser = auth.currentUser;
+  const profilePathRef = `PROFILE-PIC${currentUser?.uid}`;
   // ALERT
   // SHOW SIGN OUT ALERT
   const [signOutAlertVisible, setSignOutAlertVisible] = useState(false);
@@ -109,6 +109,8 @@ export default function Profile(props) {
     }
 
     const result = await ImagePicker.launchCameraAsync();
+
+    let pickerResult = await ImagePicker.launchCameraAsync();
 
     setAvator(result.uri);
     // Explore the result

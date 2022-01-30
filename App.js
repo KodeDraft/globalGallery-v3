@@ -13,6 +13,7 @@ import SignUp from "./screens/SignUp";
 import SignIn from "./screens/SignIn";
 import OnBoarding from "./screens/OnBoarding";
 import PasswordReset from "./screens/PasswordReset";
+import DetailedPost from "./screens/DetailedPost";
 
 // VISIBLE SCREENS STACK
 import Tabs from "./navigation/tabs";
@@ -55,6 +56,12 @@ export default function App() {
             component={PasswordReset}
             options={{ title: "PASSWORD RESET" }}
           />
+          <Tab.Screen
+            name="DetailedPost"
+            component={DetailedPost}
+            options={{ title: "DETAILED POST" }}
+          />
+
           <Tab.Screen name="bottomTab" component={Tabs} />
           {/* <Tabs /> */}
         </Stack.Navigator>

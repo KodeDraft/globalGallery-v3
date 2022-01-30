@@ -66,7 +66,10 @@ export default function ViewPost({ navigation }) {
                   ListFooterComponent={<View style={{ height: 310 }} />}
                   renderItem={({ item }) => (
                     <ScrollView>
-                      <Card style={{ marginTop: 30 }}>
+                      <Card
+                        style={{ marginTop: 30 }}
+                        onPress={() => console.log("Clicked")}
+                      >
                         <CardImage source={{ uri: item.image }} />
                         <CardTitle subtitle={item.title} />
                         <CardContent text={item.desc} />

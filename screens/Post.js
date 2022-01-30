@@ -12,9 +12,12 @@ import {
   ScrollView,
   ActivityIndicator,
   Modal,
+  Alert,
 } from "react-native";
 // SAFE AREA VIEW
 import { SafeAreaView } from "react-native-safe-area-context";
+// LOCAL STORAGE
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // ICONS
 import { Ionicons } from "@expo/vector-icons";
 // PICKING AND TAKING IMAGE FROM EXPO-IMAGE-PICKER
@@ -39,10 +42,10 @@ export default function Post({ navigation }) {
 
   // GETTING NAME FROM ASYNC STORAGE AND SHOWING DATE AND TIME
   useEffect(() => {
-    getName();
     showDate();
     showTime();
-  });
+    getName();
+  }, []);
 
   // RANDOM KEY
   const randomKey = generateKey(8);
@@ -61,6 +64,8 @@ export default function Post({ navigation }) {
   const [fullDate, setFullDate] = useState(null);
 
   const [loadingModal, setLoadingModal] = useState(false);
+
+  // ERROR MESSAGE
 
   // BOTTOM SHEET REFERENCE
   const selectRBSheet = useRef();
@@ -132,7 +137,6 @@ export default function Post({ navigation }) {
       const value = await AsyncStorage.getItem("USER-NAME");
       if (value !== null) {
         setArtist(value);
-        console.log(value);
       }
     } catch (error) {
       // Error retrieving data
@@ -150,6 +154,9 @@ export default function Post({ navigation }) {
 
     return result;
   }
+  const requiredAlert = (head, body) => {
+    Alert.alert(`${head}`, `${body}`);
+  };
   // ERASING TITIE AND PAINTING DESC
   const resetForm = () => {
     setTitle("");
@@ -192,11 +199,20 @@ export default function Post({ navigation }) {
       selectRBSheet.current.close();
     }
   };
+  // !important => UPLOADING
   const uploadPost = async () => {
-    if (title.length < 1) {
-      alert("Enter The Painting Title");
+    if (image == null) {
+      requiredAlert(
+        "All Inputs Are Required",
+        "Upload A Image By Clicking The Camera Icon"
+      );
+    } else if (title.length < 1) {
+      requiredAlert("All Inputs Are Required", "Enter The Painting Title");
     } else if (desc.length < 1) {
-      alert("All Inputs Are Required");
+      requiredAlert(
+        "All Inputs Are Required",
+        "Enter Description On Your Painting"
+      );
     } else {
       setLoadingModal(true);
       setPostLoading(true);
@@ -364,7 +380,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   formContainer: {
-    marginLeft: 64,
+    marginLeft: "5%",
     marginTop: 32,
     marginRight: 32,
   },
@@ -395,6 +411,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: "#eb4c34",
     borderRadius: 5,
+    width: "100%",
   },
   submitBtnText: {
     color: "#fff",
@@ -462,6 +479,23 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "bold",
     color: "white",
+  },
+  errorArea: {
+    backgroundColor: "#FA2A55",
+    paddingTop: 25,
+    paddingBottom: 25,
+    borderRadius: 3,
+    marginTop: 10,
+    width: "50%",
+    alignSelf: "center",
+    marginLeft: 64,
+  },
+  errorMessage: {
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 15,
+    fontWeight: "500",
+    letterSpacing: 2,
   },
 });
 
