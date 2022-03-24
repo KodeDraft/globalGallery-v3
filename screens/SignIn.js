@@ -36,10 +36,6 @@ export default function SignIn({ navigation }) {
   const [errAlertVisible, setErrAlertVisible] = useState(false);
   const [errText, setErrText] = useState("");
 
-  const toggleAlert = React.useCallback(() => {
-    setAlertVisible(!alertVisible);
-  }, [alertVisible]);
-
   // GETTING THE CURRENT USER
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {

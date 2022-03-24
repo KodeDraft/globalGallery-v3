@@ -22,11 +22,21 @@ import {
 } from "react-native-cards";
 
 // FIREBASE IMPORTS
-import { collection, getDocs } from "firebase/firestore/lite";
-import { getFirestore } from "firebase/firestore/lite";
+// import { collection, getDocs } from "firebase/firestore/lite";
+// import { getFirestore } from "firebase/firestore/lite";
 import firebaseConfig from "../config/firebaseConfig";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { initializeApp } from "firebase/app";
+// FIREBASE
+// import { onSnapshot, query, orderBy } from "firebase/firestore";
+// FIREBASE
+import {
+  getFirestore,
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+} from "firebase/firestore";
 
 initializeApp(firebaseConfig);
 
@@ -39,8 +49,10 @@ export default function ViewPost({ navigation }) {
 
   // GETTING POSTS FROM FIREBASE FIRESTORE
   useEffect(() => {
-    getPosts();
+    // getPosts();
+    getRealtimePosts();
   }, []);
+
   // GETTING DATA FROM FIREBASE FIRESTORE
   const getPosts = async () => {
     const taskCol = collection(db, "posts");
@@ -49,6 +61,24 @@ export default function ViewPost({ navigation }) {
     setPosts(taskList);
     console.log(taskList);
   };
+
+  const getRealtimePosts = () => {
+    const colRef = collection(db, "posts");
+
+    const q = query(colRef, orderBy("postDate", "desc"));
+
+    onSnapshot(q, (snapshot) => {
+      let resievedPost = [];
+      snapshot.docs.forEach((doc) => {
+        resievedPost.push({
+          ...doc.data(),
+        });
+      });
+
+      setPosts(resievedPost);
+    });
+  };
+
   return (
     <>
       <SafeAreaView>

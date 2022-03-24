@@ -214,10 +214,20 @@ export default function Post({ navigation }) {
         "Enter Description On Your Painting"
       );
     } else {
-      setLoadingModal(true);
-      setPostLoading(true);
       const img = await fetch(image);
       const bytes = await img.blob();
+
+      // GENERATING RANDOM KEY
+      const randomKey = Math.random()
+        .toString(36)
+        .replace(/[^a-z]+/g, "")
+        .substr(0, 7);
+
+      const postImgPathReference = ref(storage, `posts/${randomKey}`);
+
+      setLoadingModal(true);
+      setPostLoading(true);
+
       await uploadBytes(postImgPathReference, bytes).then(() => {
         getDownloadURL(postImgPathReference).then((url) => {
           setDoc(doc(db, "posts", randomKey), {
@@ -231,10 +241,10 @@ export default function Post({ navigation }) {
           });
         });
       });
-      setSucessBottomSheetVisble(true);
       setPostLoading(false);
       setLoadingModal(false);
       resetForm();
+      setSucessBottomSheetVisble(true);
     }
   };
   // JSK FUNCTIONS
@@ -321,7 +331,7 @@ export default function Post({ navigation }) {
                 <RBSheet
                   ref={selectRBSheet}
                   closeOnDragDown={true}
-                  closeOnPressMask={false}
+                  // closeOnPressMask={false}
                   closeOnPressMask={() => selectRBSheet.current.close()}
                   height={320}
                   customStyles={{
