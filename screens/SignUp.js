@@ -152,8 +152,8 @@ export default function SignUp({ navigation }) {
 const styles = StyleSheet.create({
   leftCircle: {
     backgroundColor: "#23A6D5",
-    width: "60%",
-    height: "33%",
+    width: 230,
+    height: 230,
     borderRadius: 150,
     position: "absolute",
     top: -50,
@@ -161,8 +161,8 @@ const styles = StyleSheet.create({
   },
   rightCircle: {
     backgroundColor: "#8022d9",
-    width: "80%",
-    height: "48%",
+    width: 330,
+    height: 330,
     borderRadius: 250,
     position: "absolute",
     top: -150,
@@ -175,12 +175,11 @@ const styles = StyleSheet.create({
     height: 50,
   },
   container: {
-    marginTop: 50,
+    marginTop: 120,
   },
   title: {
     textAlign: "center",
     fontSize: 30,
-    fontWeight: "bold",
     color: "#23A6D5",
     fontFamily: "extraBold-special-title",
   },
@@ -190,14 +189,12 @@ const styles = StyleSheet.create({
   },
   formLabel: {
     color: "#8e93a1",
-    fontSize: 20,
+    fontSize: 15,
     fontFamily: "semiBold-special-description",
   },
   formField: {
     borderBottomWidth: 1,
     borderBottomColor: "#8e93a1",
-    marginTop: 10,
-    paddingBottom: 5,
     color: "#23A6D5",
     fontWeight: "bold",
   },
